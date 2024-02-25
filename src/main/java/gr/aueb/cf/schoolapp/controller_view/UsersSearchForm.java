@@ -92,12 +92,19 @@ public class UsersSearchForm extends JFrame {
 
                     users = userService.getUserByUsername(username);
 
+                    if (users.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "User not found", "SEARCH",
+                                JOptionPane.ERROR_MESSAGE );
+                        return;
+                    }
+
                     Main.getUsersSearchForm().setVisible(false);
                     Main.getUpdateDeleteUsersForm().setVisible(true);
                 } catch (UserDAOException | UserNotFoundException e1) {
                     // failure
                     String message = e1.getMessage();
                     JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
                 }
             }
         });

@@ -16,21 +16,42 @@ import static org.junit.jupiter.api.Assertions.*;
 class TeacherDAOTest {
     private static ITeacherDAO teacherDAO;
 
+    /**
+     * Εκτελείται μία φορά μόνο, μόλις φορτώνεται η κλάση.
+     * Πρέπει να είναι static.
+     *
+     * @throws SQLException
+     */
     @BeforeAll
     public static void setupClass() throws SQLException {
         teacherDAO = new TeacherDAOImpl();
         DBHelper.eraseData();
     }
 
+
+    /**
+     * Εκτελείται πριν από κάθε test.
+     *
+     * @throws TeacherDAOException
+     */
     @BeforeEach
     public void setup() throws TeacherDAOException {
          createDummyData();
     }
 
+
+    /**
+     * Εκτελείται μετά από κάθε test.
+     * Καθαρίζει τη ΒΔ.
+     *
+     * @throws SQLException
+     */
     @AfterEach
     public void tearDown() throws SQLException {
         DBHelper.eraseData();
     }
+
+
 
     @Test
     public void persistAndGetTeacher() throws TeacherDAOException {
@@ -64,7 +85,7 @@ class TeacherDAOTest {
     @Test
     void delete() throws TeacherDAOException {
         int id = 1;
-        teacherDAO.delete(1);
+        teacherDAO.delete(id);
 
         Teacher teacher = teacherDAO.getById(1);
         assertNull(teacher);

@@ -58,7 +58,7 @@ public interface IUserService {
 
 
     /**
-     * Searches and gets back to the caller  list of the
+     * Searches and gets back to the caller a list of the
      * {@link User} objects identified by their username or
      * username's initial letters.
      *

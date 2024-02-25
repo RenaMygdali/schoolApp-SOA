@@ -11,8 +11,8 @@ import java.util.List;
 public interface ITeacherService {
 
     /**
-     * Inserts a {@link TeacherDTO} based on the data carried
-     * by the {@link TeacherDTO}.
+     * Inserts a {@link Teacher} based on the data carried
+     * by the {@link TeacherInsertDTO}.
      *
      * @param insertDTO
      *          DTO object that contains the data.
@@ -25,7 +25,7 @@ public interface ITeacherService {
 
     /**
      * Updates a {@link Teacher} based on the data carried by
-     * the {@link TeacherDTO}.
+     * the {@link TeacherUpdateDTO}.
      *
      * @param updateDTO
      *          DTO object that contains the data of the new
@@ -41,8 +41,7 @@ public interface ITeacherService {
             TeacherNotFoundException;
 
     /**
-     * Deletes a {@link Teacher} based on the data carried
-     * by the {@link TeacherDTO}.
+     * Deletes a {@link Teacher} based on its id.
      *
      * @param id
      *      the id of the teacher to be deleted.

@@ -50,7 +50,7 @@ class TeacherServiceTest {
 
     @Test
     public void updateTeacher() throws TeacherNotFoundException, TeacherDAOException {
-        TeacherUpdateDTO updateDTO = new TeacherUpdateDTO(2, "Athanassios2", "Androutsos2");
+        TeacherUpdateDTO updateDTO = new TeacherUpdateDTO(1, "Athanassios2", "Androutsos2");
         teacherService.updateTeacher(updateDTO);
 
         List<Teacher> teachers = teacherService.getTeacherByLastname(updateDTO.getLastname());
@@ -59,8 +59,8 @@ class TeacherServiceTest {
 
     @Test
     public void deleteTeacher() throws TeacherNotFoundException, TeacherDAOException {
-        int id = 1;
-        teacherService.deleteTeacher(1);
+        int id = 2;
+        teacherService.deleteTeacher(id);
 
         Teacher teacher = teacherService.getTeacherById(id);
         assertNull(teacher);

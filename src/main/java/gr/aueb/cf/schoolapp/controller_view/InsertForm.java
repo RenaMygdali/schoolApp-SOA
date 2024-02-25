@@ -135,7 +135,8 @@ public class InsertForm extends JFrame {
 						return;
 					}
 
-					JOptionPane.showMessageDialog(null, "Teacher" + teacher.getLastname() + " was" +
+					JOptionPane.showMessageDialog(null, "Teacher " + teacher.getLastname() + " " +
+							"was" +
 							" inserted", "INSERT", JOptionPane.PLAIN_MESSAGE);
 			    } catch (TeacherDAOException e1) {
 			    	String message = e1.getMessage();
@@ -154,7 +155,7 @@ public class InsertForm extends JFrame {
 
 		closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.getSearchForm().setEnabled(true);
+				Main.getSearchForm().setVisible(true);
 				Main.getInsertForm().setVisible(false);
 			}
 		});

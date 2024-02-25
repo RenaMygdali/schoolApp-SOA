@@ -75,6 +75,11 @@ public class UpdateDeleteUsersForm extends JFrame {
                     users =
                             userService.getUserByUsername(Main.getUsersSearchForm().getUsername());
 
+                    if (users == null) {
+                        JOptionPane.showMessageDialog(null, "User not found", "SEARCH",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+
                     listPosition = 0;
                     listSize = users.size();
 

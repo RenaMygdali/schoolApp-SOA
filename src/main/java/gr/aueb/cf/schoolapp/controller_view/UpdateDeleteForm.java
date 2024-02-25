@@ -300,7 +300,7 @@ public class UpdateDeleteForm extends JFrame {
 
 		closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.getSearchForm().setEnabled(true);
+				Main.getSearchForm().setVisible(true);
 				Main.getUpdateDeleteForm().setVisible(false);
 			}
 		});

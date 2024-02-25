@@ -8,8 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class που εκκαθαρίζει τους πίνακες της ΒΔ από τα
+ * dummy data και αρχικοποιεί τα sequences των auto-increment πεδίων
+ * (του ID) στο 1.
+ */
 public class DBHelper {
 
+    /**
+     * No instances of this class should be available.
+     */
     private DBHelper() {}
 
     public static void eraseData() throws SQLException {
@@ -26,7 +34,7 @@ public class DBHelper {
             List<String> tables = mapRSToList(rs);
             for (String table : tables) {
                 connection.prepareStatement("DELETE FROM " + table).executeUpdate();
-                connection.prepareStatement("ALTER TABLE " + table + "AUTO_INCREMENT=1").executeUpdate();
+                connection.prepareStatement("ALTER TABLE " + table + " AUTO_INCREMENT = 1").executeUpdate();
             }
             connection.prepareStatement("SET @@foreign_key_checks = 1").executeUpdate();
         } finally {
@@ -47,6 +55,13 @@ public class DBHelper {
         }
     }
 
+    /**
+     * Αντιγράφει τα δεδομένα του Result Set σε ένα List<String>.
+     *
+     * @param rs    the result set with the data to be mapped.
+     * @return      the list with the mapped (copied) data.
+     * @throws SQLException
+     */
     private static List<String> mapRSToList(ResultSet rs) throws SQLException {
         List<String> tables = new ArrayList<>();
 

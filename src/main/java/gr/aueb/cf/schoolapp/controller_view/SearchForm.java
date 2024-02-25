@@ -86,6 +86,12 @@ public class SearchForm extends JFrame {
 
 					teachers = teacherService.getTeacherByLastname(lastname);
 
+					if (teachers.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Teacher not found", "SEARCH",
+								JOptionPane.ERROR_MESSAGE );
+						return;
+					}
+
 					Main.getUpdateDeleteForm().setVisible(true);
 					Main.getSearchForm().setVisible(false);
 				} catch (TeacherDAOException | TeacherNotFoundException e1) {
