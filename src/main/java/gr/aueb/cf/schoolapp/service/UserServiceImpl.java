@@ -1,14 +1,10 @@
 package gr.aueb.cf.schoolapp.service;
 
-import gr.aueb.cf.schoolapp.dao.ITeacherDAO;
 import gr.aueb.cf.schoolapp.dao.IUserDAO;
 import gr.aueb.cf.schoolapp.dao.exceptions.TeacherDAOException;
 import gr.aueb.cf.schoolapp.dao.exceptions.UserDAOException;
-import gr.aueb.cf.schoolapp.dto.TeacherInsertDTO;
-import gr.aueb.cf.schoolapp.dto.TeacherUpdateDTO;
 import gr.aueb.cf.schoolapp.dto.UserInsertDTO;
 import gr.aueb.cf.schoolapp.dto.UserUpdateDTO;
-import gr.aueb.cf.schoolapp.model.Teacher;
 import gr.aueb.cf.schoolapp.model.User;
 import gr.aueb.cf.schoolapp.security.SecUtil;
 import gr.aueb.cf.schoolapp.service.exceptions.TeacherNotFoundException;
@@ -50,9 +46,6 @@ public class UserServiceImpl implements IUserService {
                 throw new UserNotFoundException("User with username " + updateDTO.getUsername() + " was" +
                         " not found");
             }
-
-            String hashPass = SecUtil.hashPassword(updateDTO.getPassword());
-
             return userDAO.update(user);
         } catch (UserDAOException | UserNotFoundException e) {
             e.printStackTrace();
@@ -61,7 +54,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void deleteUser(String username) throws UserNotFoundException, UserDAOException {
+    public void deleteUserByUsername(String username) throws UserNotFoundException, UserDAOException {
         if (username == null) return;
 
         try {
@@ -70,7 +63,28 @@ public class UserServiceImpl implements IUserService {
                 throw new UserNotFoundException("User with username " + username + " was not " +
                         "found");
             }
-            userDAO.delete(username);
+            userDAO.deleteByUsername(username);
+        } catch (UserDAOException | UserNotFoundException e) {
+//            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteUserById(Integer id) throws UserDAOException, UserNotFoundException {
+        if (id == null) return;
+
+        try {
+
+            if (userDAO.getById(id) == null) {
+                throw new UserNotFoundException("User with id " + id + " was not found");
+            }
+            userDAO.deleteById(id);
+
+//            Teacher existingTeacher = Optional.ofNullable(teacherDAO.getById(id))
+//                    .orElseThrow(() -> new TeacherNotFoundException("Teacher with id: " + id + " " +
+//                            "was not found"));
+//            teacherDAO.delete(existingTeacher.getId());
         } catch (UserDAOException | UserNotFoundException e) {
 //            e.printStackTrace();
             throw e;
@@ -94,6 +108,23 @@ public class UserServiceImpl implements IUserService {
             return users;
         } catch (UserDAOException | UserNotFoundException e) {
             e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public User getUserById(Integer id) throws UserDAOException, UserNotFoundException {
+        User user;
+
+        if (id == null) return null;
+
+        try {
+            if (userDAO.getById(id) == null) {
+                throw new UserNotFoundException("User with id " + id + " was not found");
+            }
+            user = userDAO.getById(id);
+            return user;
+        } catch (UserDAOException | UserNotFoundException e) {
             throw e;
         }
     }

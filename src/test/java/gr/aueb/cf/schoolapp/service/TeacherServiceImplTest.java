@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TeacherServiceTest {
+class TeacherServiceImplTest {
 
     private static ITeacherDAO teacherDAO = new TeacherDAOImpl();
     private static ITeacherService teacherService;
@@ -40,8 +40,8 @@ class TeacherServiceTest {
     }
 
     @Test
-    public void insertAndGetTeacher() throws TeacherDAOException, TeacherNotFoundException {
-        TeacherInsertDTO insertDTO = new TeacherInsertDTO("Anna", "Giannoutsou");
+    public void insertAndGetTeacher() throws TeacherDAOException {
+        TeacherInsertDTO insertDTO = new TeacherInsertDTO("Rena", "Migdali");
 
         teacherService.insertTeacher(insertDTO);
         List<Teacher> teachers = teacherService.getTeacherByLastname(insertDTO.getLastname());
@@ -59,11 +59,16 @@ class TeacherServiceTest {
 
     @Test
     public void deleteTeacher() throws TeacherNotFoundException, TeacherDAOException {
-        int id = 2;
+        int id = 1;
         teacherService.deleteTeacher(id);
 
-        Teacher teacher = teacherService.getTeacherById(id);
-        assertNull(teacher);
+        assertThrows(TeacherNotFoundException.class, () -> {
+            teacherService.getTeacherById(1);
+        });
+
+//        Teacher teacher = teacherService.getTeacherById(id);
+//        assertNull(teacher);
+//        assertTrue(true);
     }
 
     @Test

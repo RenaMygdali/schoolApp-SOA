@@ -84,8 +84,6 @@ public interface ITeacherService {
      *      that is a List of {@link Teacher} objects.
      * @throws TeacherDAOException
      *      if any DAO exception occurs.
-     * @throws TeacherNotFoundException
-     *      if any {@link Teacher} with the given lastname was not found.
      */
-    List<Teacher> getTeacherByLastname(String lastname) throws TeacherDAOException, TeacherNotFoundException;
+    List<Teacher> getTeacherByLastname(String lastname) throws TeacherDAOException;
 }

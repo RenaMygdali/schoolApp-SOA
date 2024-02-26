@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TeacherDAOTest {
+class TeacherDAOImplTest {
     private static ITeacherDAO teacherDAO;
 
     /**
@@ -87,7 +87,7 @@ class TeacherDAOTest {
         int id = 1;
         teacherDAO.delete(id);
 
-        Teacher teacher = teacherDAO.getById(1);
+        Teacher teacher = teacherDAO.getById(id);
         assertNull(teacher);
     }
 

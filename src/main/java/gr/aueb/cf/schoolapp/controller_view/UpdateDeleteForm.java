@@ -68,7 +68,7 @@ public class UpdateDeleteForm extends JFrame {
 					idTxt.setText(Integer.toString(teachers.get(listPosition).getId()));
 					firstnameTxt.setText(teachers.get(listPosition).getFirstname());
 					lastnameTxt.setText(teachers.get(listPosition).getLastname());
-				} catch (TeacherDAOException | TeacherNotFoundException e1) {
+				} catch (TeacherDAOException e1) {
 					String message = e1.getMessage();
 					JOptionPane.showMessageDialog(null, message, "Error in getting teachers",
 							JOptionPane.ERROR_MESSAGE);

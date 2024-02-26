@@ -94,7 +94,7 @@ public class SearchForm extends JFrame {
 
 					Main.getUpdateDeleteForm().setVisible(true);
 					Main.getSearchForm().setVisible(false);
-				} catch (TeacherDAOException | TeacherNotFoundException e1) {
+				} catch (TeacherDAOException e1) {
 					// failure
 					String message = e1.getMessage();
 					JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);

@@ -22,7 +22,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
-public class UsersSearchForm extends JFrame {
+public class SearchUserForm extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -35,7 +35,7 @@ public class UsersSearchForm extends JFrame {
     /**
      * Create the frame.
      */
-    public UsersSearchForm() {
+    public SearchUserForm() {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
@@ -45,38 +45,34 @@ public class UsersSearchForm extends JFrame {
 
         setTitle("Αναζήτηση Χρήστη");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 414, 290);
+        setBounds(100, 100, 530, 451);
         setLocationRelativeTo(null);
+        
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(234, 234, 234));
+        contentPane.setBackground(new Color(245, 255, 250));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JPanel searchPanel = new JPanel();
-        searchPanel.setBounds(72, 30, 268, 133);
-        searchPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-        contentPane.add(searchPanel);
-        searchPanel.setLayout(null);
-
         usernameTxt = new JTextField();
-        usernameTxt.setBounds(60, 45, 155, 23);
-        searchPanel.add(usernameTxt);
+        usernameTxt.setBounds(142, 89, 201, 37);
+
+        contentPane.add(usernameTxt);
         usernameTxt.setColumns(10);
 
-        JLabel userNameLbl = new JLabel("Username");
-        userNameLbl.setBounds(95, 11, 84, 23);
-        userNameLbl.setForeground(new Color(205, 48, 20));
-        userNameLbl.setFont(new Font("Tahoma", Font.PLAIN, 19));
-        searchPanel.add(userNameLbl);
+        JLabel usernameLbl = new JLabel("username");
+        usernameLbl.setBounds(202, 58, 100, 20);
+        usernameLbl.setFont(new Font("Tahoma", Font.BOLD, 16));
+        usernameLbl.setForeground(new Color(160, 82, 45));
+        contentPane.add(usernameLbl);
 
 
         // Search Button
-        JButton searchUserBtn = new JButton("Αναζήτηση");
-        searchUserBtn.setBounds(87, 89, 100, 33);
+        JButton searchBtn = new JButton("Αναζήτηση");
+        searchBtn.setBounds(87, 89, 100, 33);
 
-        searchUserBtn.addActionListener(new ActionListener() {
+        searchBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 // Data Binding
@@ -98,7 +94,7 @@ public class UsersSearchForm extends JFrame {
                         return;
                     }
 
-                    Main.getUsersSearchForm().setVisible(false);
+                    Main.getSearchUserForm().setVisible(false);
                     Main.getUpdateDeleteUsersForm().setVisible(true);
                 } catch (UserDAOException | UserNotFoundException e1) {
                     // failure
@@ -109,22 +105,49 @@ public class UsersSearchForm extends JFrame {
             }
         });
 
-        searchUserBtn.setForeground(Color.BLUE);
-        searchUserBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        searchPanel.add(searchUserBtn);
+        searchBtn.setBounds(186, 137, 113, 37);
+        searchBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        searchBtn.setForeground(new Color(0, 0, 255));
+        contentPane.add(searchBtn);
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBounds(102, 40, 289, 161);
+        mainPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        contentPane.add(mainPanel);
+
+        // Insert Button
+        JButton insertBtn = new JButton("Εισαγωγή");
+
+        insertBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Main.getInsertUserForm().setVisible(true);
+                Main.getSearchUserForm().setVisible(false);
+            }
+        });
+
+        insertBtn.setBounds(186, 238, 113, 37);
+        insertBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        insertBtn.setForeground(new Color(0, 0, 255));
+        contentPane.add(insertBtn);
+
+        JPanel insertPanel = new JPanel();
+        insertPanel.setBounds(102, 212, 289, 99);
+        insertPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        contentPane.add(insertPanel);
 
 
         // Close Button
         JButton closeBtn = new JButton("Close");
-        closeBtn.setBounds(240, 192, 100, 33);
+
         closeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Main.getMenu().setVisible(true);
-                Main.getUsersSearchForm().setVisible(false);
+                Main.getSearchUserForm().setVisible(false);
             }
         });
-        closeBtn.setForeground(Color.BLUE);
-        closeBtn.setFont(new Font("Tahoma", Font.BOLD, 14));
+        closeBtn.setBounds(302, 345, 89, 37);
+        closeBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        closeBtn.setForeground(new Color(0, 0, 255));
         contentPane.add(closeBtn);
     }
 

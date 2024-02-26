@@ -64,7 +64,7 @@ public class Menu extends JFrame {
 		btnUsers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.getMenu().setVisible(false);
-				Main.getUsersSearchForm().setVisible(true);
+				Main.getSearchUserForm().setVisible(true);
 			}
 		});
 		contentPane.add(btnUsers);

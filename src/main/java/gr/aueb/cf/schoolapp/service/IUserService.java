@@ -1,12 +1,9 @@
 package gr.aueb.cf.schoolapp.service;
 
-import gr.aueb.cf.schoolapp.dao.exceptions.TeacherDAOException;
 import gr.aueb.cf.schoolapp.dao.exceptions.UserDAOException;
 import gr.aueb.cf.schoolapp.dto.*;
 import gr.aueb.cf.schoolapp.dto.UserInsertDTO;
-import gr.aueb.cf.schoolapp.model.Teacher;
 import gr.aueb.cf.schoolapp.model.User;
-import gr.aueb.cf.schoolapp.service.exceptions.TeacherNotFoundException;
 import gr.aueb.cf.schoolapp.service.exceptions.UserNotFoundException;
 
 import java.util.List;
@@ -54,7 +51,20 @@ public interface IUserService {
      * @throws UserNotFoundException
      *      if any {@link User} identified by its username was not found.
      */
-    void deleteUser(String username) throws UserDAOException, UserNotFoundException;
+    void deleteUserByUsername(String username) throws UserDAOException, UserNotFoundException;
+
+
+    /**
+     * Deletes a {@link User} based on its id.
+     *
+     * @param id
+     *         the id of the {@link User} to be deleted.
+     * @throws UserDAOException
+     *          if any DAO exception occurs.
+     * @throws UserNotFoundException
+     *         if any {@link User} identified by its id was not found.
+     */
+    void deleteUserById(Integer id) throws UserDAOException, UserNotFoundException;
 
 
     /**
@@ -75,5 +85,21 @@ public interface IUserService {
      *      if any {@link User} with the specific username was not found.
      */
     List<User> getUserByUsername(String username) throws UserDAOException, UserNotFoundException;
+
+
+    /**
+     * Searches and gets back to the caller a {@link User} based
+     * on the given id.
+     *
+     * @param id
+     *      the id of the {@link User} we are looking for.
+     * @return
+     *      the corresponding instance of the {@link User}.
+     * @throws UserDAOException
+     *      if any DAO exception occurs.
+     * @throws UserNotFoundException
+     *      if any {@link User} with the specific id was not found.
+     */
+    User getUserById(Integer id) throws UserDAOException, UserNotFoundException;
 
 }

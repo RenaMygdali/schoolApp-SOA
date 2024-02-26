@@ -7,10 +7,11 @@ import java.awt.EventQueue;
 public class Main {
 	private static Menu menu;
 	private static InsertForm insertForm;
+	private static InsertUserForm insertUserForm;
 	private static UpdateDeleteForm updateDeleteForm;
 	private static SearchForm searchForm;
-	private static UsersSearchForm usersSearchForm;
-	private static UpdateDeleteUsersForm updateDeleteUsersForm;
+	private static SearchUserForm searchUserForm;
+	private static UpdateDeleteUserForm updateDeleteUsersForm;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -28,15 +29,19 @@ public class Main {
 					insertForm.setLocationRelativeTo(null);
 					insertForm.setVisible(false);
 
+					insertUserForm = new InsertUserForm();
+					insertUserForm.setLocationRelativeTo(null);
+					insertUserForm.setVisible(false);
+
 					updateDeleteForm = new UpdateDeleteForm();
 					updateDeleteForm.setLocationRelativeTo(null);
 					updateDeleteForm.setVisible(false);
 //
-                    usersSearchForm = new UsersSearchForm();
-                    usersSearchForm.setLocationRelativeTo(null);
-                    usersSearchForm.setVisible(false);
+                    searchUserForm = new SearchUserForm();
+                    searchUserForm.setLocationRelativeTo(null);
+                    searchUserForm.setVisible(false);
 
-					updateDeleteUsersForm = new UpdateDeleteUsersForm();
+					updateDeleteUsersForm = new UpdateDeleteUserForm();
 					updateDeleteUsersForm.setLocationRelativeTo(null);
 					updateDeleteUsersForm.setVisible(false);
 
@@ -62,15 +67,19 @@ public class Main {
 		return insertForm;
 	}
 
+	public static InsertUserForm getInsertUserForm() {
+		return insertUserForm;
+	}
+
 	public static UpdateDeleteForm getUpdateDeleteForm() {
 		return updateDeleteForm;
 	}
 
-	public static UsersSearchForm getUsersSearchForm() {
-		return usersSearchForm;
+	public static SearchUserForm getSearchUserForm() {
+		return searchUserForm;
 	}
 
-	public static UpdateDeleteUsersForm getUpdateDeleteUsersForm() {
+	public static UpdateDeleteUserForm getUpdateDeleteUsersForm() {
 		return updateDeleteUsersForm;
 	}
 }

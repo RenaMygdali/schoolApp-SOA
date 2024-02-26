@@ -9,6 +9,7 @@ import gr.aueb.cf.schoolapp.service.exceptions.TeacherNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TeacherServiceImpl implements ITeacherService {
     private final ITeacherDAO teacherDAO;
@@ -98,25 +99,23 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public List<Teacher> getTeacherByLastname(String lastname) throws TeacherDAOException, TeacherNotFoundException {
+    public List<Teacher> getTeacherByLastname(String lastname) throws TeacherDAOException {
         List<Teacher> teachers = new ArrayList<>();
         if (lastname == null) return teachers;
 
         try {
 
-            if (teacherDAO.getByLastname(lastname) == null) {
-                throw new TeacherNotFoundException("Teacher with lastname " + lastname + " not " +
-                        "found");
-            }
-
-            teachers = teacherDAO.getByLastname(lastname);
-
+//            if (teacherDAO.getByLastname(lastname) == null) {
+//                throw new TeacherNotFoundException("Teacher with lastname " + lastname + " not " +
+//                        "found");
+//            }
+//            teachers = teacherDAO.getByLastname(lastname);
 //            return teachers;
-//            return Optional.ofNullable(teacherDAO.getByLastname(lastname))
-//                    .orElseThrow(() -> new RuntimeException("Teacher with lastname: " + lastname + " " +
-//                            "was not found"));
-            return teachers;
-        } catch (TeacherDAOException | TeacherNotFoundException e) {
+
+            return Optional.ofNullable(teacherDAO.getByLastname(lastname))
+                    .orElseThrow(() -> new RuntimeException("Teachers not found"));
+
+        } catch (TeacherDAOException | RuntimeException e) {
 //            e.printStackTrace();
             throw e;
         }

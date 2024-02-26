@@ -7,18 +7,13 @@ import javax.swing.border.EmptyBorder;
 import gr.aueb.cf.schoolapp.Main;
 import gr.aueb.cf.schoolapp.dao.IUserDAO;
 import gr.aueb.cf.schoolapp.dao.UserDAOImpl;
-import gr.aueb.cf.schoolapp.dao.exceptions.TeacherDAOException;
 import gr.aueb.cf.schoolapp.dao.exceptions.UserDAOException;
-import gr.aueb.cf.schoolapp.dto.TeacherUpdateDTO;
 import gr.aueb.cf.schoolapp.dto.UserUpdateDTO;
-import gr.aueb.cf.schoolapp.model.Teacher;
 import gr.aueb.cf.schoolapp.model.User;
 import gr.aueb.cf.schoolapp.security.SecUtil;
 import gr.aueb.cf.schoolapp.service.IUserService;
 import gr.aueb.cf.schoolapp.service.UserServiceImpl;
-import gr.aueb.cf.schoolapp.service.exceptions.TeacherNotFoundException;
 import gr.aueb.cf.schoolapp.service.exceptions.UserNotFoundException;
-import gr.aueb.cf.schoolapp.service.util.DBUtil;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,7 +24,6 @@ import javax.swing.JTextField;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,7 +38,7 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.JPasswordField;
 
-public class UpdateDeleteUsersForm extends JFrame {
+public class UpdateDeleteUserForm extends JFrame {
     private static final long serialVersionUID = 123456;
     private JPanel contentPane;
     private JTextField usernameTxt;
@@ -65,7 +59,7 @@ public class UpdateDeleteUsersForm extends JFrame {
     private int listSize;
 //    private JTextField roleTxt;
 
-    public UpdateDeleteUsersForm() {
+    public UpdateDeleteUserForm() {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
@@ -73,12 +67,7 @@ public class UpdateDeleteUsersForm extends JFrame {
 
                 try {
                     users =
-                            userService.getUserByUsername(Main.getUsersSearchForm().getUsername());
-
-                    if (users == null) {
-                        JOptionPane.showMessageDialog(null, "User not found", "SEARCH",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    }
+                            userService.getUserByUsername(Main.getSearchUserForm().getUsername());
 
                     listPosition = 0;
                     listSize = users.size();
@@ -86,6 +75,8 @@ public class UpdateDeleteUsersForm extends JFrame {
                     if (listSize == 0) {
                         idTxt.setText("");
                         usernameTxt.setText("");
+                        newPassTxt.setText("");
+                        confirmPassTxt.setText("");
                         return;
                     }
 
@@ -253,8 +244,11 @@ public class UpdateDeleteUsersForm extends JFrame {
 
                 try {
                     UserUpdateDTO updateDTO = new UserUpdateDTO();
+
                     updateDTO.setId(Integer.parseInt(id));
                     updateDTO.setUsername(username);
+
+//                    String hashPassword = SecUtil.hashPassword(inputPass);
                     updateDTO.setPassword(inputPass);
 
                     User users = userService.updateUser(updateDTO);
@@ -297,7 +291,7 @@ public class UpdateDeleteUsersForm extends JFrame {
                             JOptionPane.YES_NO_OPTION);
 
                     if (response == JOptionPane.YES_OPTION) {
-                        userService.deleteUser(username);
+                        userService.deleteUserByUsername(username);
                         JOptionPane.showMessageDialog(null, "User was deleted successfully",
                                 "DELETE", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -321,7 +315,7 @@ public class UpdateDeleteUsersForm extends JFrame {
         closeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Main.getUpdateDeleteUsersForm().setVisible(false);
-                Main.getUsersSearchForm().setVisible(true);
+                Main.getSearchUserForm().setVisible(true);
             }
         });
 

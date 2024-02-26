@@ -19,11 +19,12 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User insert(User user) throws UserDAOException {
         String sql = "INSERT INTO USERS (USERNAME, PASSWORD) VALUES (?, ?)";
+        String username = "";
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            String username = user.getUsername();
+            username = user.getUsername();
             String password = user.getPassword();
 
             if (username.isEmpty() || password.isEmpty()) {
@@ -43,7 +44,7 @@ public class UserDAOImpl implements IUserDAO {
 
         } catch (SQLException e) {
 //           e.printStackTrace();
-            throw new UserDAOException("SQL Insert Error in User " + user);
+            throw new UserDAOException("SQL Insert Error in User with username " + username);
         }
     }
 
@@ -57,14 +58,15 @@ public class UserDAOImpl implements IUserDAO {
             int id = user.getId();
             String username = user.getUsername();
             String password = user.getPassword();
-//            String password = SecUtil.hashPassword(user.getPassword());
 
             if (username.isEmpty() || password.isEmpty()) {
                 return null;
             }
 
+//            String hashPass = SecUtil.hashPassword(password);
+
             ps.setString(1, username);
-            ps.setString(2, SecUtil.hashPassword(password));
+            ps.setString(2, password);
             ps.setInt(3, id);
 
             int n = ps.executeUpdate();
@@ -81,7 +83,7 @@ public class UserDAOImpl implements IUserDAO {
     }
 
     @Override
-    public void delete(String username) throws UserDAOException {
+    public void deleteByUsername(String username) throws UserDAOException {
         String sql = "DELETE FROM USERS WHERE USERNAME = ?";
 
         try (Connection connection = DBUtil.getConnection();
@@ -92,6 +94,21 @@ public class UserDAOImpl implements IUserDAO {
         } catch (SQLException e) {
 //            e.printStackTrace();
             throw new UserDAOException("SQL Delete Error in User with username: " + username);
+        }
+    }
+
+    @Override
+    public void deleteById(Integer id) throws UserDAOException {
+        String sql = "DELETE FROM USERS WHERE ID = ?";
+
+        try (Connection connection = DBUtil.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+//            e.printStackTrace();
+            throw new UserDAOException("SQL Delete Error in User with id: " + id);
         }
     }
 
@@ -121,5 +138,32 @@ public class UserDAOImpl implements IUserDAO {
             throw new UserDAOException("SQL Error in User with username: " + username);
         }
         return users;
+    }
+
+    @Override
+    public User getById(Integer id) throws UserDAOException {
+        String sql = "SELECT * FROM USERS WHERE ID = ?";
+        User user = null;
+        ResultSet rs;
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                user = new User(
+                        rs.getInt("ID"),
+                        rs.getString("USERNAME"),
+                        rs.getString("PASSWORD")
+                );
+            }
+            return user;
+        } catch (SQLException e) {
+//            e.printStackTrace();
+            throw new UserDAOException("SQL Error in user with id: " + id);
+        }
     }
 }

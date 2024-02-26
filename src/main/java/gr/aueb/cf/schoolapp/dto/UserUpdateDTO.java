@@ -7,7 +7,8 @@ public class UserUpdateDTO extends BaseDTO {
     public UserUpdateDTO() {
     }
 
-    public UserUpdateDTO(String username, String password) {
+    public UserUpdateDTO(Integer id, String username, String password) {
+        super();
         this.username = username;
         this.password = password;
     }

@@ -1,24 +1,28 @@
 package gr.aueb.cf.schoolapp.dto;
 
 public class UserReadOnlyDTO extends BaseDTO {
-    String firstname;
-    String lastname;
+    String username;
+    String password;
 
     public UserReadOnlyDTO() {}
 
-    public String getFirstname() {
-        return firstname;
+    public UserReadOnlyDTO(Integer id) {
+        super();
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public String getUsername() {
+        return username;
     }
 
-    public String getLastname() {
-        return lastname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
