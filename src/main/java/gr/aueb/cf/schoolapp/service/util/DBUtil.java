@@ -18,11 +18,11 @@ public class DBUtil {
     // static block to config ds properties.
     static {
         ds.setUrl("jdbc:mysql://localhost:3306/SchoolApp?serverTimezone=UTC");
-        ds.setUsername("schoolAppAdmin");
+        ds.setUsername("schoolAppUser");
 
         // Κρατάμε έξω από την εφαρμογή τα password των DBs. Τα εισάγουμε στις μεταβλητές
         // περιβάλλοντος και τραβάμε από εκεί.
-        ds.setPassword(System.getenv("schoolAppAdminPSWD"));
+        ds.setPassword(System.getenv("schoolAppUserPass"));
         ds.setInitialSize(8);
         ds.setMaxTotal(32);
         ds.setMinIdle(8);

@@ -25,7 +25,7 @@ class TeacherDAOImplTest {
     @BeforeAll
     public static void setupClass() throws SQLException {
         teacherDAO = new TeacherDAOImpl();
-        DBHelper.eraseData();
+//        DBHelper.eraseData();
     }
 
 
